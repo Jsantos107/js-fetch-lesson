@@ -56,7 +56,6 @@ function postDog(dog) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(dog),
-    }).then(parseJSON)
-        .then(console.log)
+    }).then(dogForm.reset())
 }
 
