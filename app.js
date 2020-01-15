@@ -24,34 +24,39 @@ function dogCards(dog) {
         `
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'DELETE'
-    deleteButton.addEventListener('click', (event) => {
+    deleteButton.addEventListener('click', () => {
         event.target.parentNode.remove()
         fetch(`${BASE_URL}/${dog.id}`, {
             method: 'DELETE'
         })
     })
-    
+
     dogInfo.appendChild(deleteButton)
     dogsContainer.appendChild(dogInfo)
 }
 
-dogForm.addEventListener('submit', event => {
+dogForm.addEventListener('submit', () => {
     event.preventDefault()
+
     const formData = new FormData(dogForm)
     const name = formData.get("name")
     const breed = formData.get("breed")
     const image = formData.get("image")
     const age = formData.get("age")
+
     dogCards({ name, breed, image, age })
+    postDog({ name, breed, image, age })
+})
+
+function postDog(dog) {
     fetch(BASE_URL, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, breed, image, age }),
+        body: JSON.stringify(dog),
     }).then(parseJSON)
         .then(console.log)
-
-})
+}
 
