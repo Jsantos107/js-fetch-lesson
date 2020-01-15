@@ -14,3 +14,17 @@ img {
     height: 25%;
     width: 25%;
 }
+
+form {
+    display: block;
+    
+}
+
+label{
+    font-size: 24px;
+}
+
+input {
+    border: solid;
+    
+}
