@@ -1,18 +1,21 @@
 const BASE_URL = 'https://dogs-backend.herokuapp.com/dogs'
+const dogsContainer = document.querySelector('.dogs-container')
+const dogForm = document.querySelector('#dog-form')
 
 fetch(BASE_URL)
     .then(parseJSON)
     .then(createDogs)
     .catch(console.log)
+
 function parseJSON(response) {
     return response.json()
 }
+
 function createDogs(dogs) {
     dogs.map(dogCards)
 }
-function dogCards(dog) {
 
-    const dogsContainer = document.querySelector('.dogs-container')
+function dogCards(dog) {
     const dogInfo = document.createElement('div')
     dogInfo.className = 'dog-info'
     dogInfo.innerHTML = `
@@ -27,11 +30,11 @@ function dogCards(dog) {
             method: 'DELETE'
         })
     })
+    
     dogInfo.appendChild(deleteButton)
     dogsContainer.appendChild(dogInfo)
 }
 
-const dogForm = document.querySelector('#dog-form')
 dogForm.addEventListener('submit', event => {
     event.preventDefault()
     const formData = new FormData(dogForm)
@@ -47,7 +50,7 @@ dogForm.addEventListener('submit', event => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ name, breed, image, age }),
-    }).then(response => response.json())
+    }).then(parseJSON)
         .then(console.log)
 
 })
