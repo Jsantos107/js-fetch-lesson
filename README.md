@@ -1,5 +1,10 @@
 1. fetch dogs
+```
+const BASE_URL = 'https://dogs-backend.herokuapp.com/dogs'
+```
+
 2. create dog cards for each returned dog object and display in the UI
+
 ```
 <div class="dog-info">
     <img src="source here" />
