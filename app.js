@@ -1,5 +1,5 @@
 //fetch dogs
-//create dog cards for each returned dog object:
+//create dog cards for each returned dog object and display in the UI
 {/* <div class="dog-info">
     <img src="source here" />
     <h1>Dog Name: name here</h1>
