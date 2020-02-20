@@ -15,11 +15,14 @@
 
 // 3. add an event listener to the html form
 // 4. on submit, dog should 
-//     //b) be posted to backend
+//     //b) be posted to backend (try using FormData to grab values from the form)
 //     //c) form should be cleared
 
 // 5. add event listener to delete button
 // 6. delete dog from backend
+
+//7. create an ageForm that updates a dog's age using PATCH
+    //do not use FormData
 const BASE_URL = 'https://dogs-backend.herokuapp.com/dogs'
 const dogsContainer = document.querySelector('.dogs-container')
 const dogForm = document.querySelector('#dog-form')
@@ -37,26 +40,20 @@ fetch(BASE_URL)
             `
         const deleteButton = document.createElement('button')
         deleteButton.innerText = 'DELETE'
-        deleteButton.addEventListener('click', () => {
-            event.target.parentNode.remove()
-            fetch(`${BASE_URL}/${dog.id}`, {
-                method: 'DELETE'
-            })
-        })
+        deleteButton.addEventListener('click', () => deleteDog(dog))
 
         const ageForm = document.createElement('form')
         ageForm.innerHTML = `
             <label for="age">Dog's Age:</label>
-            <input type="number" name="age" value="${dog.age}"/>
+            <input type="number" id="age" name="age" value="${dog.age}"/>
             <input type="submit" />
         `
 
         ageForm.addEventListener('submit', event => {
             event.preventDefault()
-            const formData = new FormData(ageForm)
-            const age = formData.get("age")
+            const age = document.getElementById('age').value
 
-            console.log(`${BASE_URL}/${dog.id}`)
+            console.log("age", age)
 
             fetch(`${BASE_URL}/${dog.id}`, {
                 method: "PATCH",
@@ -65,7 +62,7 @@ fetch(BASE_URL)
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ age })
-            }).then(parseJSON)
+            }).then(response => response.json())
                 .then(console.log)
 
         })
@@ -96,15 +93,3 @@ dogForm.addEventListener('submit', () => {
         body: JSON.stringify({ name, breed, image, age }),
     }).then(dogForm.reset())
 })
-
-function postDog(dog) {
-    fetch(BASE_URL, {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dog),
-    }).then(dogForm.reset())
-}
-
